@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comp Manager - Sistema Unificado</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <!-- Header Principal -->
+    <header class="main-header">
+        <div class="container">
+            <h1>🏥 Comp Manager</h1>
+            <p class="subtitle">Sistema Unificado de Scraping y Diccionario</p>
+        </div>
+    </header>
+
+    <!-- Sistema de Pestañas -->
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="scraper">
+                🎯 Scraper
+            </button>
+            <button class="tab-btn" data-tab="diccionario">
+                📚 Diccionario
+            </button>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- TAB 1: SCRAPER -->
+        <!-- ============================================ -->
+        <div id="tab-scraper" class="tab-content active">
+            <!-- Instrucciones -->
+            <div class="info-box">
+                <h3>📋 Flujo de Trabajo</h3>
+                <ol>
+                    <li><strong>Abrir Chrome</strong> → Lanza navegador con depuración remota</li>
+                    <li>Haz <strong>login manual</strong> en el navegador que se abrió</li>
+                    <li><strong>Iniciar Scraper</strong> → Se conecta al Chrome y comienza a capturar</li>
+                    <li><strong>Navega normalmente</strong> en Comp - todo se captura automáticamente</li>
+                    <li><strong>OPCIONAL:</strong> Activa <strong>Scroll Automático</strong> para clicks automáticos</li>
+                    <li>Al finalizar → <strong>Generar Excel</strong></li>
+                </ol>
+                <p class="tip">💡 <strong>Tip:</strong> El navegador queda abierto entre corridas. Solo ciérralo al final del día.</p>
+            </div>
+
+            <!-- Barra de Estado -->
+            <div class="status-bar">
+                <div class="status-item">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span id="statusText">Inactivo</span>
+                </div>
+                <div class="status-item">
+                    <span id="taskText">Esperando...</span>
+                </div>
+                <div class="status-item" id="scrollStatus" style="display: none;">
+                    <span class="emoji">🤖</span>
+                    <span>Scroll Auto: <strong>ACTIVO</strong></span>
+                </div>
+            </div>
+
+            <!-- Controles del Scraper -->
+            <div class="controls">
+                <button class="btn btn-chrome" onclick="ScraperModule.openChrome()">
+                    🌐 Abrir Chrome
+                </button>
+                
+                <button class="btn btn-primary" onclick="ScraperModule.runScraper()" id="scraperBtn">
+                    🎯 Iniciar Scraper
+                </button>
+                
+                <!-- <button class="btn btn-success" onclick="ScraperModule.sendEnter()" id="enterBtn" disabled>
+                    ⏎ ENTER
+                </button> -->
+                
+                <button class="btn btn-warning" onclick="ScraperModule.toggleScroll()" id="scrollBtn" disabled>
+                    🤖 Scroll Auto
+                </button>
+                
+                <button class="btn btn-info" onclick="ScraperModule.runExcel()">
+                    📊 Generar Excel
+                </button>
+                
+                <button class="btn btn-danger" onclick="ScraperModule.stop()" id="stopBtn" disabled>
+                    ⛔ Detener
+                </button>
+            </div>
+
+            <!-- Log del Scraper -->
+            <div class="log-container">
+                <div class="log-header">
+                    <h4>📋 Log en Tiempo Real</h4>
+                    <button class="btn-clear" onclick="ScraperModule.clearLog()">🗑️ Limpiar</button>
+                </div>
+                <pre id="scraperLog"></pre>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- TAB 2: DICCIONARIO -->
+        <!-- ============================================ -->
+        <div id="tab-diccionario" class="tab-content">
+            <!-- Estadísticas -->
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-value">-</div>
+                    <div class="stat-label">Total Productos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">-</div>
+                    <div class="stat-label">Con Traducción</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">-</div>
+                    <div class="stat-label">Sin Traducir</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">-</div>
+                    <div class="stat-label">Total Traducciones</div>
+                </div>
+            </div>
+
+            <!-- Controles del Diccionario -->
+            <div class="dict-controls">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Buscar traducción..." />
+                    <select id="filterSelect">
+                        <option value="todos">Todos</option>
+                        <option value="con_traduccion">Con Traducción</option>
+                        <option value="sin_traduccion">Sin Traducir</option>
+                    </select>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-success" onclick="DiccionarioModule.showAddModal()">
+                        ➕ Nueva Traducción
+                    </button>
+                    <button class="btn btn-primary" onclick="DiccionarioModule.autoMatch()">
+                        🤖 Matching Automático
+                    </button>
+                    <button class="btn btn-info" onclick="DiccionarioModule.exportar()">
+                        💾 Exportar JSON
+                    </button>
+                    <button class="btn btn-warning" onclick="DiccionarioModule.showImportModal()">
+                        📤 Importar TXT
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabla de Traducciones -->
+            <div class="table-container">
+                <table id="diccionarioTable">
+                    <thead>
+                        <tr>
+                            <th>ID Comp</th>
+                            <th>Nombre Comp</th>
+                            <th>Producto Asociado</th>
+                            <th>Confianza</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="diccionarioBody">
+                        <tr>
+                            <td colspan="5" class="loading">Cargando...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginación -->
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MODALES -->
+    <!-- ============================================ -->
+
+    <!-- Modal: Añadir/Editar Traducción -->
+    <div id="modalAdd" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>➕ Nueva Traducción</h3>
+                <button class="close" onclick="DiccionarioModule.closeModals()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nombre en comp:</label>
+                    <input type="text" id="inputNombrePanacea" placeholder="Ej: APOQUEL 5.4MG X 20 COMP">
+                </div>
+
+                <div class="form-group">
+                    <label>Producto en Sistema:</label>
+                    <input type="text" id="inputProducto" placeholder="Empieza a escribir para buscar..." 
+                           autocomplete="off">
+                    <input type="hidden" id="inputProductoId">
+                    <div id="sugerenciasProducto" class="sugerencias"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Confianza (0-100):</label>
+                    <input type="number" id="inputConfianza" value="100" min="0" max="100">
+                </div>
+
+                <!-- Sugerencias Automáticas -->
+                <div id="sugerenciasAuto" class="sugerencias-auto"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="DiccionarioModule.closeModals()">Cancelar</button>
+                <button class="btn btn-primary" onclick="DiccionarioModule.saveTraduccion()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Matching Automático -->
+    <div id="modalAutoMatch" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🤖 Matching Automático</h3>
+                <button class="close" onclick="DiccionarioModule.closeModals()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Este proceso buscará automáticamente productos sin traducción y los asociará con los productos más similares de tu sistema.</p>
+                
+                <div class="form-group">
+                    <label>Umbral de Confianza (%):</label>
+                    <input type="number" id="inputUmbral" value="80" min="60" max="100">
+                    <small>Solo se crearán traducciones con confianza mayor o igual a este valor.</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Límite de Productos:</label>
+                    <input type="number" id="inputLimite" value="100" min="10" max="1000">
+                    <small>Máximo de productos a procesar en esta ejecución.</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="DiccionarioModule.closeModals()">Cancelar</button>
+                <button class="btn btn-success" onclick="DiccionarioModule.executeAutoMatch()">Ejecutar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Importar TXT -->
+    <div id="modalImport" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📤 Importar desde TXT</h3>
+                <button class="close" onclick="DiccionarioModule.closeModals()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Sube un archivo de texto con un producto por línea. El sistema intentará matchearlos automáticamente.</p>
+                
+                <div class="form-group">
+                    <label>Archivo TXT:</label>
+                    <input type="file" id="inputFile" accept=".txt">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="DiccionarioModule.closeModals()">Cancelar</button>
+                <button class="btn btn-primary" onclick="DiccionarioModule.executeImport()">Importar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast para notificaciones -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts -->
+    <script src="/static/app.js"></script>
+</body>
+</html>

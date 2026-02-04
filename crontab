@@ -1,0 +1,3 @@
+# Minuto Hora DiaMes Mes DiaSemana Comando
+0 16 * * * /usr/local/bin/python /app/main.py >> /var/log/cron.log 2>&1
+# Nota: La línea vacía al final es obligatoria

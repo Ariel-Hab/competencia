@@ -1,0 +1,89 @@
+{
+  "url": "https://www.gc-sistemas.com.ar/crmcloud/panacea-api/api/v1/producto/producto_precio_especifico3",
+  "data": {
+    "producto_precios_especificos": [
+      {
+        "id_precio_especifico": "1882223",
+        "id_producto": "868",
+        "cuit": null,
+        "razon_social": null,
+        "id_precio_lista": "0",
+        "precio_lista": null,
+        "cantidad_desde": 1,
+        "fecha_desde": "00/00/0000",
+        "fecha_hasta": "00/00/0000",
+        "fecha_actualizacion": "12/02/2025 04:05",
+        "fecha_desde_sql": "0000-00-00 00:00:00",
+        "fecha_hasta_sql": "0000-00-00 00:00:00",
+        "descripcion": "",
+        "precio_tipo": "Normal",
+        "id_precio_tipo": "1",
+        "descuento": "0.24",
+        "bonificacion": "0",
+        "descuento_especial": 0.18,
+        "descuento_usuario": "24,00%",
+        "bonificacion_usuario": "0,00%",
+        "descuento_especial_usuario": "18,00%",
+        "precio_sin_iva": 10685.194008,
+        "precio_sin_iva_usuario": "10685,19",
+        "precio_con_iva": 12929.08474968,
+        "precio_con_iva_usuario": "12929,08"
+      },
+      {
+        "id_precio_especifico": "1882224",
+        "id_producto": "868",
+        "cuit": null,
+        "razon_social": null,
+        "id_precio_lista": "0",
+        "precio_lista": null,
+        "cantidad_desde": 3,
+        "fecha_desde": "00/00/0000",
+        "fecha_hasta": "00/00/0000",
+        "fecha_actualizacion": "12/02/2025 04:05",
+        "fecha_desde_sql": "0000-00-00 00:00:00",
+        "fecha_hasta_sql": "0000-00-00 00:00:00",
+        "descripcion": "",
+        "precio_tipo": "Normal",
+        "id_precio_tipo": "1",
+        "descuento": "0",
+        "bonificacion": "0.37",
+        "descuento_especial": 0.18,
+        "descuento_usuario": "0,00%",
+        "bonificacion_usuario": "37,00%",
+        "descuento_especial_usuario": "18,00%",
+        "precio_sin_iva": 10262.38379562,
+        "precio_sin_iva_usuario": "10262,38",
+        "precio_con_iva": 12417.484392701,
+        "precio_con_iva_usuario": "12417,48"
+      }
+    ],
+    "producto_descuentos_financieros": [
+      {
+        "id_producto": "868",
+        "cantidad_desde": 1,
+        "descuento_contado": 0.05,
+        "descuento_contado_usuario": "5%",
+        "precio_sin_iva_con_desc_financiero": 10150.9343076,
+        "precio_sin_iva_con_desc_financiero_usuario": "10150,93",
+        "precio_con_iva_con_desc_financiero": 12282.630512196,
+        "precio_con_iva_con_desc_financiero_usuario": "12282,63"
+      },
+      {
+        "id_producto": "868",
+        "cantidad_desde": 3,
+        "descuento_contado": 0.05,
+        "descuento_contado_usuario": "5%",
+        "precio_sin_iva_con_desc_financiero": 9749.2646058394,
+        "precio_sin_iva_con_desc_financiero_usuario": "9749,26",
+        "precio_con_iva_con_desc_financiero": 11796.610173066,
+        "precio_con_iva_con_desc_financiero_usuario": "11796,61"
+      }
+    ],
+    "permite_descuento_especial": "S",
+    "permite_descuento_financiero": "S",
+    "cliente_especial": 0,
+    "mejor_precio": 9749.2646058394,
+    "mejor_precio_usuario": "$ 9.749,26",
+    "cantidad_desde_optima": 3
+  }
+}

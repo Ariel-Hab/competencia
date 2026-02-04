@@ -1,0 +1,13 @@
+{
+  "url": "https://www.gc-sistemas.com.ar/crmcloud/panacea-api/api/v1/producto/producto_precio_especifico3",
+  "data": {
+    "producto_precios_especificos": [],
+    "producto_descuentos_financieros": [],
+    "permite_descuento_especial": "S",
+    "permite_descuento_financiero": "S",
+    "cliente_especial": 0,
+    "mejor_precio": "4228",
+    "mejor_precio_usuario": "$ 4.228,00",
+    "cantidad_desde_optima": 1
+  }
+}
